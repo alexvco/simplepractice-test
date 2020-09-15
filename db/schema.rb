@@ -10,14 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200915221312) do
+ActiveRecord::Schema.define(version: 20200915221838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "start_datetime"
+    t.datetime "end_datetime"
+    t.integer "customer_id"
+    t.integer "physician_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_appointments_on_customer_id"
+    t.index ["physician_id"], name: "index_appointments_on_physician_id"
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string "first_name"
     t.string "last_ame"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "physician_id"
+    t.index ["physician_id"], name: "index_customers_on_physician_id"
+  end
+
+  create_table "physicians", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
